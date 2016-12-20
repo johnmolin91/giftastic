@@ -27,11 +27,26 @@ var queryUrl = "http://api.giphy.com/v1/gifs/search";
 
 
 			for (var i=0; i<data.length; i++){
-			$('body').append($('<img>').attr('src', data[i].images.original.url));
-}
+			$('body').append($('<img>').attr('src', data[i].images.original.url).data('still', data[i].images.original_still.url).data('animate', data[i].images.original.url).data('state', 'still').addClass('gif'));
+		}
 		}).fail(function(err) {
 		  throw err;
 		});
 
 		return false;
 	})
+
+$(".gif").on("click", function() {
+	var state = $(this).data("state");
+	if (state == "still"){
+      	var new_src = $(this).data("animate");
+      	$(this).attr("src", new_src);
+      	new_src = "animate";
+
+      }
+      else {
+      	var new_src = $(this).data("still");
+      	$(this).attr("src", new_src);
+      	new_src = "still"
+}
+});
